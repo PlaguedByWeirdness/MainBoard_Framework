@@ -16,7 +16,7 @@
 #define TACTIC_ONE_POSITION_COUNT	2
 
 // variables for keeping position count, odometry return status and active state
-uint8_t current_position = 0, next_position = 0, odometry_status, active_state = TACTIC_ONE, backjump_status = 0;
+uint8_t current_position = 0, next_position = 0, odometry_status, active_state = TACTIC_ONE;
 
 #ifdef first_desk
 // first desk coordinates
@@ -40,13 +40,6 @@ static void wait_while_detection_options(uint8_t jump_enabled) {
 
 	_delay_ms(200);
 	while(TACTIC_ONE_POSITION[current_position].callback(0) == 1) {
-		if(backjump_status == 0 && jump_enabled == 1) {
-			if(TACTIC_ONE_POSITION[current_position].direction == FORWARD) {
-				odometry_move_straight(-(BACKUP_DISTANCE), NORMAL_SPEED, sensor_all_back);
-			} else {
-				odometry_move_straight(BACKUP_DISTANCE, NORMAL_SPEED, sensor_all_front);
-			}
-		}
 		_delay_ms(10);
 	}
 	next_position = current_position;
@@ -54,11 +47,13 @@ static void wait_while_detection_options(uint8_t jump_enabled) {
 
 }
 
+/*
+ * 	IDEA: implement the jumpback into the odometry board... reason: faster
+ */
 static void wait_while_detection(void) 			{ wait_while_detection_options(0); }	// with no jump back when detected
 static void wait_while_detection_withjump(void) { wait_while_detection_options(1); }	// with jump back when detected
 
 void darkside(void) {
-
 
 	// setting the starting position
 	struct odometry_position startingPosition; startingPosition.x = 0; startingPosition.y = 0; startingPosition.angle = 0;

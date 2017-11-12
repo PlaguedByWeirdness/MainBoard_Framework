@@ -20,9 +20,8 @@ volatile struct odometry_position position=
 };
 
 /*
- * 	void odometry_set_speed(uint8_t speed)
- *
- * 	Send odometry board the max speed
+ * 	Function:    void odometry_set_speed(uint8_t speed)
+ *	Description: Send odometry board the max speed
  */
 void odometry_set_speed(uint8_t speed)
 {
@@ -39,9 +38,8 @@ void odometry_set_speed(uint8_t speed)
 }
 
 /*
- * 	void odometry_query_position(void)
- *
- * 	Get the current position. Update it to position
+ * 	Function:    void odometry_query_position(void)
+ *	Description: Get the current position. Update it to position
  */
 void odometry_query_position(void)
 {
@@ -59,9 +57,8 @@ void odometry_query_position(void)
 }
 
 /*
- * 	static uint8_t odometry_wait_until_done(uint8_t (*callback)(uint32_t start_time))
- *
- * 	Callback function, execute function while odometry is moving
+ * 	Function:    static uint8_t odometry_wait_until_done(uint8_t (*callback)(uint32_t start_time))
+ *	Description: Callback function, execute function while odometry is moving
  */
 static uint8_t odometry_wait_until_done(uint8_t (*callback)(uint32_t start_time))
 {
@@ -80,9 +77,8 @@ static uint8_t odometry_wait_until_done(uint8_t (*callback)(uint32_t start_time)
 }
 
 /*
- * 	void odometry_stop(int8_t type)
- *
- * 	Send stop to odometry
+ * 	Function:    void odometry_stop(int8_t type)
+ *	Description: Send stop to odometry
  */
 void odometry_stop(int8_t type)
 {
@@ -100,9 +96,8 @@ void odometry_stop(int8_t type)
 }
 
 /*
- * 	uint8_t odometry_move_straight(int16_t distance, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
- *
- * 	Send move straight command to odometry
+ * 	Function:    uint8_t odometry_move_straight(int16_t distance, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
+ *	Description: Send move straight command to odometry
  */
 uint8_t odometry_move_straight(int16_t distance, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
 {
@@ -118,9 +113,8 @@ uint8_t odometry_move_straight(int16_t distance, uint8_t speed, uint8_t (*callba
 }
 
 /*
- * 	uint8_t odometry_move_to_position(struct odometry_position* position, uint8_t speed, uint8_t direction, uint8_t (*callback)(uint32_t start_time))
- *
- * 	Send move to position function to odometry
+ * 	Function:    uint8_t odometry_move_to_position(struct odometry_position* position, uint8_t speed, uint8_t direction, uint8_t (*callback)(uint32_t start_time))
+ *  Description: Send move to position function to odometry
  */
 uint8_t odometry_move_to_position(struct odometry_position* position, uint8_t speed, uint8_t direction, char (*callback)(uint32_t start_time))
 {
@@ -141,6 +135,10 @@ uint8_t odometry_move_to_position(struct odometry_position* position, uint8_t sp
 	return odometry_wait_until_done(callback);
 }
 
+/*
+ * 	Function:    void odometry_set_position(struct odometry_position* new_position)
+ * 	Description: set the position of the robot
+ */
 void odometry_set_position(struct odometry_position* new_position)
 {
 	uint8_t buffer[8];
@@ -162,9 +160,8 @@ void odometry_set_position(struct odometry_position* new_position)
 }
 
 /*
- * 	uint8_t odometry_rotate_for(uint16_t angle,uint8_t speed, uint8_t (*callback)(uint32_t start_time))
- *
- * 	Send rotate for command to odometry board
+ * 	Function:    uint8_t odometry_rotate_for(uint16_t angle,uint8_t speed, uint8_t (*callback)(uint32_t start_time))
+ *	Description: Send rotate for command to odometry board
  */
 uint8_t odometry_rotate_for(uint16_t angle,uint8_t speed, uint8_t (*callback)(uint32_t start_time))
 {
@@ -184,9 +181,8 @@ uint8_t odometry_rotate_for(uint16_t angle,uint8_t speed, uint8_t (*callback)(ui
 }
 
 /*
- * 	uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
- *
- * 	Set angle for odometry
+ * 	Function: 	 uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
+ *  Description: set the angle for the robot
  */
 uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
 {
@@ -202,7 +198,11 @@ uint8_t odometry_set_angle(uint16_t angle, uint8_t speed, uint8_t (*callback)(ui
 	return odometry_wait_until_done(callback);
 }
 
-uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
+/*
+ * 	Function: 	 uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t direction, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
+ * 	Description: the robot arranges you a hooker
+ */
+uint8_t odometry_kurva(int16_t x_pos, int16_t y_pos, int8_t angle, uint8_t direction, uint8_t speed, uint8_t (*callback)(uint32_t start_time))
 {
 	uint8_t buffer[8];
 
@@ -223,6 +223,10 @@ uint8_t odometry_kurva(uint16_t x_pos, uint16_t y_pos, int8_t angle, uint8_t dir
 	return odometry_wait_until_done(callback);
 }
 
+/*
+ * 	Function: 	void odometry_match_end(
+ * 	Decription: odometry turns off pwm
+ */
 void odometry_match_end()
 {
 	uint8_t buffer[8];
@@ -235,7 +239,7 @@ void odometry_match_end()
 }
 
 /*
- * 	Update position
+ *  Description: Functions to get state, x, y, angle. It gets the current position and returns it
  */
 uint8_t getState(void)
 {
@@ -260,3 +264,22 @@ int16_t odometry_get_angle(void)
 	odometry_query_position();
 	return position.angle;
 }
+
+/*
+ * 	Function: unsigned char odometry_compare_positions(int16_t x, int16_t y, int16_t angle, uint8_t tolerance)
+ * 	Description: Comparing the current position with a given one with tolerance
+ * 	Parameters: int16_t x 			-> the x we want to compare
+ * 				int16_t y 			-> the y we want to compare
+ * 				int16_t angle 		-> the angle we want to compare
+ * 				uint8_t tolerance 	-> the tolerance in mm
+ */
+unsigned char odometry_compare_positions(int16_t x, int16_t y, int16_t angle, uint8_t tolerance) {
+
+	if((odometry_get_x() <= x + tolerance || odometry_get_x() >= x - tolerance) && (odometry_get_y() <= x + tolerance || odometry_get_y() >= x - tolerance) && (odometry_get_angle() <= angle + 5 || odometry_get_angle() >= angle - 5)) {
+		return 1;
+	} else {
+		return 0;
+	}
+
+}
+

@@ -23,4 +23,6 @@ void darkside(void);
 void greenside(void);
 void orangeside(void);
 
+void ttl(void);
+
 #endif /* INC_SIDES_H_ */
